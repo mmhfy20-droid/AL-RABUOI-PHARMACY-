@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     const headerRow = sheet.getRow(1);
     const columns = new Map<number, string>();
     headerRow.eachCell((cell, column) => {
-      const header = String(cellValue(cell.value) ?? "").replace(/^\\uFEFF/, "").trim().toLowerCase();
+      const header = String(cellValue(cell.value) ?? "").replace(/^\uFEFF/, "").trim().toLowerCase();
       const mapped = headerMap[header];
       if (mapped) columns.set(column, mapped);
     });
