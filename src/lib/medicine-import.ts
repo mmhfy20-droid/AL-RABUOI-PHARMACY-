@@ -16,6 +16,7 @@ export type MedicineImportRow = {
   lowStockThreshold: number;
   batchNumber?: string;
   expiresAt?: string;
+  manufacturedAt?: string;
   prescriptionRequired: boolean;
   descriptionAr?: string;
   imageUrl?: string;
@@ -51,6 +52,9 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
     const expiresAt = raw.expiresAt === undefined || raw.expiresAt === null || raw.expiresAt === ""
       ? undefined
       : String(raw.expiresAt).trim();
+    const manufacturedAt = raw.manufacturedAt === undefined || raw.manufacturedAt === null || raw.manufacturedAt === ""
+      ? undefined
+      : String(raw.manufacturedAt).trim();
 
     const rowErrors: string[] = [];
     if (!sku) rowErrors.push("SKU مطلوب");
@@ -62,6 +66,7 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
     if (!currencies.has(currency)) rowErrors.push("العملة يجب أن تكون YER أو SAR أو USD");
     if (prescriptionRequired === null) rowErrors.push("قيمة الوصفة يجب أن تكون نعم أو لا");
     if (expiresAt && Number.isNaN(Date.parse(expiresAt))) rowErrors.push("تاريخ الانتهاء غير صالح");
+    if (manufacturedAt && Number.isNaN(Date.parse(manufacturedAt))) rowErrors.push("تاريخ الإنتاج غير صالح");
     if (expiresAt && !String(raw.batchNumber ?? "").trim()) rowErrors.push("رقم التشغيلة مطلوب عند إدخال تاريخ الانتهاء");
     const imageUrl = String(raw.imageUrl ?? "").trim();
     if (imageUrl) { try { if (new URL(imageUrl).protocol !== "https:") rowErrors.push("رابط الصورة يجب أن يستخدم HTTPS"); } catch { rowErrors.push("رابط الصورة غير صالح"); } }
@@ -96,6 +101,7 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
       lowStockThreshold,
       ...(String(raw.batchNumber ?? "").trim() ? { batchNumber: String(raw.batchNumber).trim() } : {}),
       ...(expiresAt ? { expiresAt } : {}),
+      ...(manufacturedAt ? { manufacturedAt } : {}),
       prescriptionRequired,
       ...(String(raw.descriptionAr ?? "").trim() ? { descriptionAr: String(raw.descriptionAr).trim() } : {}),
       ...(imageUrl ? { imageUrl } : {}),
