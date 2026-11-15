@@ -38,6 +38,22 @@ describe("validateMedicineImportRows", () => {
     expect(result.errors).toHaveLength(3);
   });
 
+  it("rejects blank price and stock values rather than silently treating them as zero", () => {
+    const result = validateMedicineImportRows([{ ...validRow, salePrice: "", quantity: null }]);
+    expect(result.rows).toHaveLength(0);
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0]).toContain("مطلوب");
+  });
+
+  it("rejects expired-date metadata without a batch number and insecure image links", () => {
+    const result = validateMedicineImportRows([
+      { ...validRow, expiresAt: "2027-01-01", imageUrl: "http://example.com/image.png" },
+    ]);
+    expect(result.rows).toHaveLength(0);
+    expect(result.errors[0]).toContain("رقم التشغيلة");
+    expect(result.errors[0]).toContain("HTTPS");
+  });
+
   it("requires a product name, category, and unambiguous prescription value", () => {
     const result = validateMedicineImportRows([
       { ...validRow, sku: "MED-004", nameAr: "", category: "", prescriptionRequired: "ربما" },
