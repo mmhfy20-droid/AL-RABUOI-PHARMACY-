@@ -19,3 +19,4 @@ describe("role permissions", () => {
     expect(hasPermission("CUSTOMER", "orders:read_own")).toBe(true);
   });
 });
+
