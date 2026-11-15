@@ -42,7 +42,7 @@ export default async function HomePage() {
             <a href="#contact">تواصل معنا</a>
           </nav>
           <div className="nav-actions">
-            <a className="button" href="#account">حسابي</a>
+            <a className="button" href="#contact">خدمة العملاء</a>
             <a className="button button-primary" href="#products">تصفح المنتجات</a>
           </div>
         </div>
@@ -57,6 +57,10 @@ export default async function HomePage() {
               مرحباً بك في الربوعي فارماسي. تجربة صيدلية رقمية تجمع سهولة الوصول
               إلى المنتجات الصحية مع خدمة موثوقة واهتمام حقيقي بك.
             </p>
+            <form action="/search" method="get" className="search-form">
+              <input name="q" placeholder="ابحث عن دواء أو منتج صحي..." aria-label="ابحث عن منتج" maxLength={100} />
+              <button className="button button-primary" type="submit">بحث</button>
+            </form>
             <div className="nav-actions">
               <a className="button button-primary" href="#categories">اكتشف الأقسام</a>
               <a className="button" href="#contact">تواصل مع الصيدلية</a>
