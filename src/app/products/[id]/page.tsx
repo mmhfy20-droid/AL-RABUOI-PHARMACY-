@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import type { Prisma } from "@/generated/prisma/client";
 import AddToCartButton from "./add-to-cart-button";
+import { formatMinorCurrency } from "@/lib/money";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +41,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           {product.manufacturer && <p>الشركة المصنعة: {product.manufacturer}</p>}
           <p>{product.descriptionAr || "لا يوجد وصف معتمد منشور لهذا المنتج."}</p>
           <p>{product.inventory && product.inventory.quantity > 0 ? "متوفر بالمخزون" : "غير متوفر حالياً"}</p>
-          <p>السعر: {product.priceMinor.toLocaleString("ar")} {product.currency}</p>
+          <p>السعر: {formatMinorCurrency(product.priceMinor, product.currency)}</p>
           <AddToCartButton productId={product.id} disabled={!product.inventory || product.inventory.quantity < 1} />
           {product.prescriptionRequired && <div className="notice">هذا المنتج يتطلب مراجعة وصفة طبية والتحقق منها قبل إتمام البيع.</div>}
           {product.usageInformation && <section><h2>معلومات الاستخدام</h2><p>{product.usageInformation}</p></section>}
