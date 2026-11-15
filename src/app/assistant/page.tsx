@@ -18,7 +18,7 @@ export default function AssistantPage() {
           </a>
           <nav className="nav-links" aria-label="التنقل الرئيسي">
             <a href="/">الرئيسية</a>
-            <a href="/products">المنتجات</a>
+            <a href="/#products">المنتجات</a>
             <a href="/account">حسابي</a>
           </nav>
         </div>
@@ -82,11 +82,11 @@ export default function AssistantPage() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section" id="assistant-setup">
           <div className="empty-state">
             <h2>ما الذي نحتاجه منك لاحقاً؟</h2>
             <p>اختيار مزود الذكاء الاصطناعي، ثم توفير مفتاح API ورابط الخدمة إن كان مطلوباً. تُحفظ المفاتيح في أسرار الاستضافة أو GitHub Secrets، ولا توضع داخل ملفات المشروع أو المحادثات.</p>
-            <a className="button" href="/docs/AL-RABUOI-ASSISTANT-SETUP.md">دليل إعداد المساعد في المستودع</a>
+            <a className="button" href="#assistant-setup">متطلبات إعداد المساعد</a>
           </div>
         </section>
       </main>
