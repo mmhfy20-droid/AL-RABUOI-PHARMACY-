@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAuthenticatedUser } from "@/lib/authorization";
 import { prisma } from "@/lib/db";
+import CartItemControls from "./cart-item-controls";
 
 export const dynamic = "force-dynamic";
 
@@ -26,10 +27,11 @@ export default async function CartPage() {
           <p>سعر الوحدة: {item.product.priceMinor.toLocaleString("ar")} {item.product.currency}</p>
           <p>المجموع: {(item.product.priceMinor * item.quantity).toLocaleString("ar")} {item.product.currency}</p>
           <p>{(item.product.inventory?.quantity ?? 0) > 0 ? "متوفر" : "غير متوفر"}</p>
+          <CartItemControls itemId={item.id} quantity={item.quantity} />
         </article>
       ))}</div>
       <h2>الإجمالي قبل التوصيل: {subtotal.toLocaleString("ar")}</h2>
-      <div className="empty-state">تحديث الكميات وإتمام الدفع سيُتاحان بعد استكمال واجهة السلة ومسار التحقق من الطلب.</div>
+      <div className="empty-state">يمكنك تعديل الكميات أو حذف المنتجات. إتمام الطلب سيُتاح بعد بناء خطوة العنوان والتحقق من الوصفة والدفع.</div>
     </> : <div className="empty-state">سلتك فارغة حالياً. <Link href="/">تصفح المنتجات</Link></div>}
   </main>;
 }
