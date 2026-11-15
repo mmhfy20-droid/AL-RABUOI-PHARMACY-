@@ -10,6 +10,10 @@ describe("calculateOrderTotals", () => {
     })).toEqual({ subtotal: 3000, discount: 300, deliveryFee: 250, total: 2950 });
   });
 
+  it("rejects an empty order", () => {
+    expect(() => calculateOrderTotals({ items: [], discount: 0, deliveryFee: 0 })).toThrow();
+  });
+
   it("rejects negative amounts and invalid quantities", () => {
     expect(() => calculateOrderTotals({
       items: [{ unitPrice: -1, quantity: 1 }], discount: 0, deliveryFee: 0,
