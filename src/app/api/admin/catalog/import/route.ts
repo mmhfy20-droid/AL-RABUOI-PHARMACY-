@@ -35,6 +35,7 @@ const headerMap: Record<string, string> = {
   "تاريخ الانتهاء": "expiresAt",
   "يتطلب وصفة؟": "prescriptionRequired",
   "الوصف المعتمد من الصيدلي": "descriptionAr",
+  "رابط الصورة": "imageUrl",
 };
 
 function cellValue(value: ExcelJS.CellValue): unknown {
@@ -90,6 +91,8 @@ export async function POST(request: Request) {
     if (!sheet || sheet.rowCount < 2) {
       return NextResponse.json({ error: "لم يتم العثور على ورقة بيانات تحتوي على صفوف." }, { status: 400 });
     }
+
+    if (sheet.rowCount > 501) return NextResponse.json({ error: "الحد الأقصى 500 صنف في الملف الواحد." }, { status: 413 });
 
     const headerRow = sheet.getRow(1);
     const columns = new Map<number, string>();
@@ -173,6 +176,7 @@ export async function POST(request: Request) {
             currency: item.currency,
             prescriptionRequired: item.prescriptionRequired,
             isPublished: false,
+            ...(item.imageUrl ? { images: { create: { url: item.imageUrl, altAr: item.nameAr } } } : {}),
             inventory: {
               create: {
                 quantity: item.quantity,
