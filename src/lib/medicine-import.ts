@@ -55,12 +55,13 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
     if (!sku) rowErrors.push("SKU مطلوب");
     if (!nameAr) rowErrors.push("الاسم التجاري مطلوب");
     if (!category) rowErrors.push("التصنيف مطلوب");
-    if (!Number.isFinite(salePrice) || salePrice < 0) rowErrors.push("سعر البيع يجب أن يكون رقماً غير سالب");
-    if (!Number.isInteger(quantity) || quantity < 0) rowErrors.push("الكمية يجب أن تكون عدداً صحيحاً غير سالب");
+    if (raw.salePrice === undefined || raw.salePrice === null || raw.salePrice === "" || !Number.isFinite(salePrice) || salePrice < 0) rowErrors.push("سعر البيع مطلوب ويجب أن يكون رقماً غير سالب");
+    if (raw.quantity === undefined || raw.quantity === null || raw.quantity === "" || !Number.isInteger(quantity) || quantity < 0) rowErrors.push("الكمية مطلوبة ويجب أن تكون عدداً صحيحاً غير سالب");
     if (!Number.isInteger(lowStockThreshold) || lowStockThreshold < 0) rowErrors.push("حد إعادة الطلب يجب أن يكون عدداً صحيحاً غير سالب");
     if (!currencies.has(currency)) rowErrors.push("العملة يجب أن تكون YER أو SAR أو USD");
     if (prescriptionRequired === null) rowErrors.push("قيمة الوصفة يجب أن تكون نعم أو لا");
     if (expiresAt && Number.isNaN(Date.parse(expiresAt))) rowErrors.push("تاريخ الانتهاء غير صالح");
+    if (expiresAt && !String(raw.batchNumber ?? "").trim()) rowErrors.push("رقم التشغيلة مطلوب عند إدخال تاريخ الانتهاء");
 
     if (sku && seenSkus.has(sku)) rowErrors.push("SKU مكرر في الملف");
     if (barcode && seenBarcodes.has(barcode)) rowErrors.push("الباركود مكرر في الملف");
