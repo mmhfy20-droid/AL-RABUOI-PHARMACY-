@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = loginSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "بيانات الدخول غير صحيحة." }, { status: 400 });
-  if (!process.env.DATABASE_URL) return NextResponse.json({ error: "خدمة الدخول غير مهيأة حالياً." }, { status: 503 });
+  if (!process.env.DATABASE_URL || !process.env.AUTH_SECRET || process.env.AUTH_SECRET.length < 32) return NextResponse.json({ error: "خدمة الدخول غير مهيأة حالياً." }, { status: 503 });
 
   const identifier = parsed.data.identifier.trim();
   const user = await prisma.user.findFirst({
