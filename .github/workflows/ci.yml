@@ -19,9 +19,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - name: Install dependencies
         run: npm install
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      - name: Validate Prisma schema
+        run: npx prisma validate
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
       - name: Run unit tests
         run: npm test
       - name: Type check
