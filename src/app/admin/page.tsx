@@ -11,15 +11,17 @@ export default async function AdminPage() {
     prisma.user.count({ where: { role: "CUSTOMER" } }),
     prisma.product.count(),
     prisma.order.count({ where: { status: "PENDING" } }),
-    prisma.inventoryBalance.count({ where: { quantity: { lte: 5 } } }),
+    prisma.$queryRaw<{ count: bigint }[]>`SELECT COUNT(*)::bigint AS count FROM "InventoryBalance" WHERE quantity <= "lowStockThreshold"`,
   ]);
+
+  const lowStockCount = Number(lowStock[0]?.count ?? 0);
 
   const metrics = [
     { title: "إجمالي الطلبات", value: orders },
     { title: "العملاء", value: customers },
     { title: "المنتجات", value: products },
     { title: "طلبات قيد الانتظار", value: pendingOrders },
-    { title: "مخزون منخفض", value: lowStock },
+    { title: "مخزون منخفض", value: lowStockCount },
   ];
 
   return <main className="container section">
