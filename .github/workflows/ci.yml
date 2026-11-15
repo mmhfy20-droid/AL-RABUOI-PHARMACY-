@@ -23,6 +23,8 @@ jobs:
         run: npm install
         env:
           DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
       - name: Validate Prisma schema
         run: npx prisma validate
         env:
