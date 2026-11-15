@@ -21,6 +21,7 @@ Versions were selected from current stable release lines; the target hosting pro
 - [x] Customer registration/login/logout API endpoints with password hashing and signed HttpOnly cookies
 - [x] Customer login and registration pages
 - [x] Customer account page with own-order listing
+- [x] Persistent customer cart with server-side stock checks, quantity updates, and item removal
 - [x] Role permission matrix and database-backed admin dashboard access guard
 - [x] One-time owner bootstrap script requiring secure environment variables
 - [x] Commerce domain tests for order totals and allowed status transitions
@@ -28,7 +29,7 @@ Versions were selected from current stable release lines; the target hosting pro
 - [x] CI workflow for Prisma validation, tests, type checking, and production build
 - [ ] Database migrations generated and applied to a real PostgreSQL database
 - [ ] Rate limiting and complete security hardening
-- [ ] Cart and checkout workflows (not implemented yet)
+- [ ] Checkout and transactional order creation (not implemented yet)
 - [ ] Password reset, email/phone verification, and robust distributed rate limiting
 - [ ] Admin UI and server-enforced role permissions
 - [ ] Payment, AI, notification, and WhatsApp integrations
