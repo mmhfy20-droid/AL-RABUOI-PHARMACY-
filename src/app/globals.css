@@ -79,3 +79,6 @@ h1 { margin:20px 0 16px; font-size:clamp(2.3rem,5vw,4.25rem); line-height:1.2; l
 .auth-form button:disabled { opacity:.65; cursor:wait; }
 .form-error { color:#ff9a9a; margin:0; }
 .order-list { display:grid; gap:12px; }
+
+.cart-action { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin:20px 0; }
+.cart-action p { flex-basis:100%; margin:0; }
