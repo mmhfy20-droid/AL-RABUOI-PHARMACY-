@@ -22,6 +22,7 @@ Versions were selected from current stable release lines; the target hosting pro
 - [x] Customer login and registration pages
 - [x] Customer account page with own-order listing
 - [x] Persistent customer cart with server-side stock checks, quantity updates, and item removal
+- [x] AL-RABUOI assistant identity, Arabic assistant page, guarded chat API contract, readiness checks, and setup guide
 - [x] Role permission matrix and database-backed admin dashboard access guard
 - [x] One-time owner bootstrap script requiring secure environment variables
 - [x] Commerce domain tests for order totals and allowed status transitions
@@ -32,7 +33,8 @@ Versions were selected from current stable release lines; the target hosting pro
 - [ ] Checkout and transactional order creation (not implemented yet)
 - [ ] Password reset, email/phone verification, and robust distributed rate limiting
 - [ ] Admin UI and server-enforced role permissions
-- [ ] Payment, AI, notification, and WhatsApp integrations
+- [ ] AL-RABUOI provider credentials, model adapter, verified knowledge retrieval, pharmacist escalation, and assistant integration tests
+- [ ] Payment, notification, and WhatsApp integrations
 - [ ] Hosting selection, deployment, and production smoke test
 
 ## Run locally
@@ -54,7 +56,7 @@ Set `OWNER_EMAIL`, `OWNER_PASSWORD` (at least 16 characters), and `OWNER_NAME` s
 `GET /api/health` reports whether the database is configured and reachable. It does not expose connection details.
 
 ## Integrations
-Al-Jaib, Flousak, AI, email, SMS, WhatsApp messaging, and push notifications are **not connected**. Their credentials and official provider access have not been supplied or verified. No payment can be marked successful through a customer action.
+Al-Jaib, Flousak, the AL-RABUOI model provider, email, SMS, WhatsApp messaging, and push notifications are **not connected**. The AL-RABUOI page and guarded API placeholder exist, but the chat is intentionally disabled until credentials and a provider adapter are supplied and tested. Their credentials and official provider access have not been supplied or verified. No payment can be marked successful through a customer action.
 
 ## Pharmacy safety
 No medicine catalog is fabricated. Clinical and usage information must be sourced and reviewed by qualified pharmacy staff before publication. Restricted products require a verified workflow before fulfilment.
