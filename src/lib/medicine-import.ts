@@ -18,6 +18,7 @@ export type MedicineImportRow = {
   expiresAt?: string;
   prescriptionRequired: boolean;
   descriptionAr?: string;
+  imageUrl?: string;
 };
 
 const currencies = new Set(["YER", "SAR", "USD"]);
@@ -62,6 +63,10 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
     if (prescriptionRequired === null) rowErrors.push("قيمة الوصفة يجب أن تكون نعم أو لا");
     if (expiresAt && Number.isNaN(Date.parse(expiresAt))) rowErrors.push("تاريخ الانتهاء غير صالح");
     if (expiresAt && !String(raw.batchNumber ?? "").trim()) rowErrors.push("رقم التشغيلة مطلوب عند إدخال تاريخ الانتهاء");
+    const imageUrl = String(raw.imageUrl ?? "").trim();
+    if (imageUrl) { try { if (new URL(imageUrl).protocol !== "https:") rowErrors.push("رابط الصورة يجب أن يستخدم HTTPS"); } catch { rowErrors.push("رابط الصورة غير صالح"); } }
+    if (sku.length > 80 || nameAr.length > 180 || category.length > 100) rowErrors.push("أحد الحقول النصية يتجاوز الحد المسموح");
+    if (salePrice * 100 > Number.MAX_SAFE_INTEGER) rowErrors.push("سعر البيع أكبر من الحد المدعوم");
 
     if (sku && seenSkus.has(sku)) rowErrors.push("SKU مكرر في الملف");
     if (barcode && seenBarcodes.has(barcode)) rowErrors.push("الباركود مكرر في الملف");
@@ -93,6 +98,7 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
       ...(expiresAt ? { expiresAt } : {}),
       prescriptionRequired,
       ...(String(raw.descriptionAr ?? "").trim() ? { descriptionAr: String(raw.descriptionAr).trim() } : {}),
+      ...(imageUrl ? { imageUrl } : {}),
     });
   });
 
