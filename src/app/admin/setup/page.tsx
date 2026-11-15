@@ -43,6 +43,11 @@ export default async function AdminSetupPage() {
       <h1 style={{fontSize:"2rem"}}>مركز تجهيز بيانات الربوعي فارماسي</h1>
       <p className="muted">مرحباً {user.fullName}. هذه قائمة البيانات المطلوبة لإكمال الإعداد. لا توجد بيانات افتراضية أو قيم مفترضة.</p>
       <div className="empty-state" style={{marginTop:20}}>
+        <h2>إدارة ملف الأدوية والمخزون</h2>
+        <p>أضف ملف المنتجات والأسعار والكميات من صفحة الاستيراد المخصصة، مع فحص الصفوف قبل الحفظ.</p>
+        <Link className="button button-primary" href="/admin/catalog/import">فتح صفحة إضافة الأدوية والمخزون</Link>
+      </div>
+      <div className="empty-state" style={{marginTop:20}}>
         <strong>الحالة الحالية: بانتظار بيانات المالك</strong>
         <p>هذه الصفحة تحصر المتطلبات الناقصة وتوضح ما يجب توفيره. لم يتم تفعيل أي بوابة دفع أو مزود رسائل أو مساعد ذكاء اصطناعي تلقائياً.</p>
       </div>
