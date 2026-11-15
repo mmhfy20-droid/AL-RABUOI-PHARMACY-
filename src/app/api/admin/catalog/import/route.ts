@@ -85,7 +85,7 @@ export async function POST(request: Request) {
     if (extension === "csv") {
       await workbook.csv.read(Readable.from([buffer]));
     } else {
-      await workbook.xlsx.load(buffer);
+      await workbook.xlsx.load(buffer as never);
     }
 
     const sheet = workbook.worksheets[0];
