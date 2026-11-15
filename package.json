@@ -36,8 +36,5 @@
     "vitest": "^4.1.12",
     "@types/pg": "^8.15.5"
   },
-  "type": "module",
-  "overrides": {
-    "tinypool": "^2.1.2"
-  }
+  "type": "module"
 }
