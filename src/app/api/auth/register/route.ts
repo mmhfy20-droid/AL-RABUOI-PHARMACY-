@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const parsed = registrationSchema.safeParse(body);
   if (!parsed.success) return NextResponse.json({ error: "بيانات التسجيل غير صحيحة." }, { status: 400 });
-  if (!process.env.DATABASE_URL) return NextResponse.json({ error: "خدمة التسجيل غير مهيأة حالياً." }, { status: 503 });
+  if (!process.env.DATABASE_URL || !process.env.AUTH_SECRET || process.env.AUTH_SECRET.length < 32) return NextResponse.json({ error: "خدمة التسجيل غير مهيأة حالياً." }, { status: 503 });
 
   const email = parsed.data.email?.trim().toLowerCase() || null;
   const phone = parsed.data.phone?.replace(/[\s()-]/g, "") || null;
