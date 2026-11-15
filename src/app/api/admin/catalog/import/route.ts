@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const workbook = new ExcelJS.Workbook();
     if (extension === "csv") {
-      await workbook.csv.read(Readable.from(buffer));
+      await workbook.csv.read(Readable.from([buffer]));
     } else {
       await workbook.xlsx.load(buffer);
     }
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
     const headerRow = sheet.getRow(1);
     const columns = new Map<number, string>();
     headerRow.eachCell((cell, column) => {
-      const header = String(cellValue(cell.value) ?? "").trim().toLowerCase();
+      const header = String(cellValue(cell.value) ?? "").replace(/^\\uFEFF/, "").trim().toLowerCase();
       const mapped = headerMap[header];
       if (mapped) columns.set(column, mapped);
     });
