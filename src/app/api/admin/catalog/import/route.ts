@@ -80,7 +80,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const buffer = Buffer.from(await file.arrayBuffer()) as unknown as import("node:buffer").Buffer;
     const workbook = new ExcelJS.Workbook();
     if (extension === "csv") {
       await workbook.csv.read(Readable.from([buffer]));
