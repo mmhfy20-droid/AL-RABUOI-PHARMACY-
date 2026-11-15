@@ -26,6 +26,7 @@ export default async function AdminPage() {
 
   return <main className="container section">
     <Link className="button" href="/">عرض المتجر</Link>
+    <Link className="button" href="/admin/setup" style={{marginInlineStart:8}}>مركز تجهيز بيانات الصيدلية</Link>
     <h1 style={{fontSize:"2rem"}}>لوحة إدارة الربوعي فارماسي</h1>
     <p className="muted">مرحباً {user.fullName} — صلاحيتك: {user.role}</p>
     <div className="categories">{metrics.map((metric) => (
