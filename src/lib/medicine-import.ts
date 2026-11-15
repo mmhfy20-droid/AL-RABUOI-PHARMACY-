@@ -4,6 +4,11 @@ export type MedicineImportRow = {
   nameAr: string;
   nameEn: string;
   category: string;
+  scientificName?: string;
+  strength?: string;
+  dosageForm?: string;
+  packSize?: string;
+  countryOfOrigin?: string;
   manufacturer?: string;
   salePrice: number;
   currency: "YER" | "SAR" | "USD";
@@ -73,6 +78,11 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
       nameAr,
       nameEn,
       category,
+      ...(String(raw.scientificName ?? "").trim() ? { scientificName: String(raw.scientificName).trim() } : {}),
+      ...(String(raw.strength ?? "").trim() ? { strength: String(raw.strength).trim() } : {}),
+      ...(String(raw.dosageForm ?? "").trim() ? { dosageForm: String(raw.dosageForm).trim() } : {}),
+      ...(String(raw.packSize ?? "").trim() ? { packSize: String(raw.packSize).trim() } : {}),
+      ...(String(raw.countryOfOrigin ?? "").trim() ? { countryOfOrigin: String(raw.countryOfOrigin).trim() } : {}),
       ...(String(raw.manufacturer ?? "").trim() ? { manufacturer: String(raw.manufacturer).trim() } : {}),
       salePrice,
       currency: currency as MedicineImportRow["currency"],
