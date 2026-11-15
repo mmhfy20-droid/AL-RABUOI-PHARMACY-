@@ -42,7 +42,7 @@ export default async function HomePage() {
             <a href="#contact">تواصل معنا</a>
           </nav>
           <div className="nav-actions">
-            <a className="button" href="#contact">خدمة العملاء</a>
+            <a className="button" href="/login">تسجيل الدخول</a>
             <a className="button button-primary" href="#products">تصفح المنتجات</a>
           </div>
         </div>
