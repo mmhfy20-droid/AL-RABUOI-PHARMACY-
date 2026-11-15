@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import type { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     return <main className="container section"><Link className="button" href="/">العودة للرئيسية</Link><div className="empty-state">تفاصيل المنتجات غير متاحة حتى إعداد قاعدة البيانات.</div></main>;
   }
 
-  let product = null;
+  type ProductDetail = Prisma.ProductGetPayload<{ include: { images: true; category: true; brand: true; inventory: true } }>;
+  let product: ProductDetail | null = null;
   try {
     product = await prisma.product.findFirst({
       where: { id, isPublished: true },
