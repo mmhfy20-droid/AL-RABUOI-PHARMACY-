@@ -70,3 +70,12 @@ h1 { margin:20px 0 16px; font-size:clamp(2.3rem,5vw,4.25rem); line-height:1.2; l
 .notice { border:1px solid rgba(255,190,80,.35); background:rgba(255,190,80,.08); color:#ffd58b; border-radius:12px; padding:14px; line-height:1.8; }
 .muted { color:var(--muted); font-size:.9rem; }
 @media (max-width:760px) { .product-detail { grid-template-columns:1fr; padding:16px; } .search-form { flex-direction:column; } }
+
+.auth-shell { max-width:680px; }
+.auth-form { display:grid; gap:16px; padding:24px; border:1px solid var(--line); border-radius:20px; background:rgba(14,22,38,.78); margin:24px 0; }
+.auth-form label { display:grid; gap:8px; color:#dceaff; }
+.auth-form input { width:100%; border:1px solid var(--line); border-radius:11px; padding:12px 14px; color:var(--text); background:#080f1c; }
+.auth-form input:focus { outline:2px solid rgba(57,213,232,.55); outline-offset:1px; }
+.auth-form button:disabled { opacity:.65; cursor:wait; }
+.form-error { color:#ff9a9a; margin:0; }
+.order-list { display:grid; gap:12px; }
