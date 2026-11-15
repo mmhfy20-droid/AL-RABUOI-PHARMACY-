@@ -1,43 +1,61 @@
-# AL-RABU'I PHARMACY
+# AL-RUBOU'I PHARMACY
 
-Dedicated workspace for **الربوعي فارماسي / Al-Rubou'i Pharmacy**.
+**الربوعي فارماسي | Al-Rubou'i Pharmacy**
 
-## Current phase
-The owner's master build prompt has been received. The project is now in requirements validation and environment discovery. No production application code, live integrations, or deployment has been completed yet.
+Arabic-first pharmacy e-commerce application. This repository is now an application foundation under active implementation; it is not yet production-ready.
+
+## Technology baseline
+- Next.js 16.4.6 / React 19.3.1 / TypeScript
+- PostgreSQL with Prisma ORM 7.10.1 and the PostgreSQL driver adapter
+- Zod request validation, bcryptjs password hashing, and signed HttpOnly session cookies
+- Vitest unit tests and GitHub Actions CI
+
+Versions were selected from current stable release lines; the target hosting provider and database service remain unselected until their availability, limits, and costs are confirmed.
+
+## Current implementation
+- [x] Spec-driven project constitution, specification, plan, tasks, and quality checklist
+- [x] Next.js application shell with Arabic RTL dark premium styling
+- [x] Storefront reads active categories and published products from PostgreSQL when configured
+- [x] Database-backed category, product detail, and bilingual-field search routes
+- [x] PostgreSQL Prisma schema for users, roles, catalog, stock, batches, orders, payments, reminders, notifications, marketing, and audit records
+- [x] Customer registration/login/logout API endpoints with password hashing and signed HttpOnly cookies
+- [x] One-time owner bootstrap script requiring secure environment variables
+- [x] Commerce domain tests for order totals and allowed status transitions
+- [x] Authentication input validation tests
+- [x] CI workflow for Prisma validation, tests, type checking, and production build
+- [ ] Database migrations generated and applied to a real PostgreSQL database
+- [ ] Rate limiting and complete security hardening
+- [ ] Customer-facing account/cart/checkout workflows
+- [ ] Admin UI and server-enforced role permissions
+- [ ] Payment, AI, notification, and WhatsApp integrations
+- [ ] Hosting selection, deployment, and production smoke test
+
+## Run locally
+Requirements: Node.js 22.12+ and npm.
+
+1. Copy `.env.example` to `.env`.
+2. Set `DATABASE_URL` to a PostgreSQL database you control.
+3. Set `AUTH_SECRET` to a unique random secret of at least 32 characters.
+4. Install dependencies: `npm install`.
+5. Generate the Prisma client: `npm run db:generate`.
+6. Validate the schema: `npm run db:validate`.
+7. After a migration has been created and reviewed, apply it with `npm run db:migrate:deploy`.
+8. Start development: `npm run dev`.
+
+## Owner account
+Set `OWNER_EMAIL`, `OWNER_PASSWORD` (at least 16 characters), and `OWNER_NAME` securely in the environment, then run `npm run bootstrap:owner` once. The script refuses to create a second owner. Remove the bootstrap password from the environment after use.
+
+## Health endpoint
+`GET /api/health` reports whether the database is configured and reachable. It does not expose connection details.
+
+## Integrations
+Al-Jaib, Flousak, AI, email, SMS, WhatsApp messaging, and push notifications are **not connected**. Their credentials and official provider access have not been supplied or verified. No payment can be marked successful through a customer action.
+
+## Pharmacy safety
+No medicine catalog is fabricated. Clinical and usage information must be sourced and reviewed by qualified pharmacy staff before publication. Restricted products require a verified workflow before fulfilment.
 
 ## Spec-driven workflow
-This repository contains a Spec Kit-compatible workflow:
-- Project principles: `.specify/memory/constitution.md`
-- Active product specification: `specs/001-al-ruboui-pharmacy/spec.md`
-- Initial implementation plan: `specs/001-al-ruboui-pharmacy/plan.md`
-- Dependency-ordered tasks: `specs/001-al-ruboui-pharmacy/tasks.md`
-- Requirements quality checklist: `specs/001-al-ruboui-pharmacy/checklists/requirements.md`
-- Local workflow skill: `.github/skills/spec-kit/SKILL.md`
+See `.specify/memory/constitution.md`, `.github/skills/spec-kit/SKILL.md`, and `specs/001-al-ruboui-pharmacy/`.
 
-The official Spec Kit CLI and its native slash-command integration have not been installed. The repository currently uses compatible specification artifacts and a local workflow skill; full CLI setup requires a supported development environment.
-
-## Working principles
-- Preserve this repository as the sole home of this pharmacy project.
-- Do not invent medicine data, prices, payment integrations, delivery coverage, or legal claims.
-- Prefer free and low-cost services; disclose cost and service limits before adopting paid dependencies.
-- Never commit credentials, API keys, private customer data, or production secrets.
-- Use tests for behavior changes and record actual verification evidence.
-- Do not claim a feature, integration, deployment, or test is complete without verifiable evidence.
-- Require human approval for clinical content, payment verification when provider APIs are unavailable, and marketing publication.
-
-## Team
-Role definitions and review boundaries are documented in `.github/TEAM.md`. Agent profiles are in `.github/agents/`.
-
-## Status
-- [x] Repository access verified
-- [x] Project team and quality framework initialized
-- [x] Owner's master build prompt received
-- [x] Spec-driven project artifacts created
-- [ ] Critical requirements clarified and approved
-- [ ] Target environment and technology stack verified
-- [ ] Application implementation
-- [ ] Automated and manual verification
-- [ ] Deployment and handover
-
-## Important
-The existence of specifications, task files, and role profiles is not evidence that the application has been implemented or that independent agents are running.
+## Current limitations
+This is an early implementation foundation. Automated CI results and real database connectivity must be checked before treating the build as verified. No production URL exists yet.
