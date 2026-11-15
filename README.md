@@ -22,6 +22,8 @@ Versions were selected from current stable release lines; the target hosting pro
 - [x] Customer login and registration pages
 - [x] Customer account page with own-order listing
 - [x] Persistent customer cart with server-side stock checks, quantity updates, and item removal
+- [x] Permission-checked Excel/CSV medicine import with row validation, transactional save, stock balances, batch metadata, and draft-only product creation
+- [x] Downloadable Excel-compatible CSV inventory template and protected admin import page
 - [x] AL-RABUOI assistant identity, Arabic assistant page, guarded chat API contract, readiness checks, and setup guide
 - [x] Role permission matrix and database-backed admin dashboard access guard
 - [x] One-time owner bootstrap script requiring secure environment variables
@@ -32,7 +34,7 @@ Versions were selected from current stable release lines; the target hosting pro
 - [ ] Rate limiting and complete security hardening
 - [ ] Checkout and transactional order creation (not implemented yet)
 - [ ] Password reset, email/phone verification, and robust distributed rate limiting
-- [ ] Admin UI and server-enforced role permissions
+- [ ] Full product editing, multi-batch-per-product import, and clinical approval workflow
 - [ ] AL-RABUOI provider credentials, model adapter, verified knowledge retrieval, pharmacist escalation, and assistant integration tests
 - [ ] Payment, notification, and WhatsApp integrations
 - [ ] Hosting selection, deployment, and production smoke test
@@ -65,4 +67,4 @@ No medicine catalog is fabricated. Clinical and usage information must be source
 See `.specify/memory/constitution.md`, `.github/skills/spec-kit/SKILL.md`, and `specs/001-al-ruboui-pharmacy/`.
 
 ## Current limitations
-This is an early implementation foundation. Automated CI results and real database connectivity must be checked before treating the build as verified. No production URL exists yet.
+This is an early implementation foundation. Automated CI results and real database connectivity must be checked before treating the build as verified. No production URL exists yet. The spreadsheet import is available in the code branch but is not accessible on the live public storefront until the changes are merged, a database is configured, and the app is deployed.
