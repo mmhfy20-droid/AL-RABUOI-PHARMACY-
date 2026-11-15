@@ -1,8 +1,19 @@
 # Implementation Plan — Feature 001
 
-**Status:** Draft. Stack and hosting are intentionally undecided pending environment inspection.
+**Status:** Partially decided. Stack baseline selected; hosting, database provider, and production costs remain unverified.
 
-## 1. Architecture decision process
+## 1. Architecture decision record
+
+### Provisional application stack
+- Next.js 16.4.6, React 19.3.1, TypeScript
+- PostgreSQL with Prisma ORM 7.10.1 and `@prisma/adapter-pg`
+- Zod validation, bcryptjs password hashing, jose signed sessions
+- Vitest and GitHub Actions CI
+
+Rationale: a maintained full-stack TypeScript application with relational integrity and a single deployable application. This is a repository-level technology decision, not proof that a production host or database has been provisioned.
+
+### Still requiring environment verification
+
 Before choosing frameworks or managed services:
 1. Inspect the repository, GitHub Actions/deployment options, available hosting, database support, file storage, and current application state.
 2. Compare at least two viable stacks against: free-tier availability, Yemen accessibility, Android-friendly maintenance, security, relational data support, deployment complexity, backups, and future operating cost.
