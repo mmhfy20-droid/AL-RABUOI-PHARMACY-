@@ -1,11 +1,32 @@
-const categories = [
-  { icon: "✚", name: "الأدوية" },
-  { icon: "✧", name: "الفيتامينات والمكملات" },
-  { icon: "◈", name: "العناية الشخصية" },
-  { icon: "♡", name: "صحة ورفاهية" },
-];
+import { prisma } from "@/lib/db";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+async function loadStorefrontData() {
+  if (!process.env.DATABASE_URL) return { categories: [], products: [], databaseConfigured: false };
+  try {
+    const [categories, products] = await Promise.all([
+      prisma.category.findMany({
+        where: { isActive: true },
+        orderBy: { sortOrder: "asc" },
+        take: 8,
+      }),
+      prisma.product.findMany({
+        where: { isPublished: true },
+        include: { images: { orderBy: { sortOrder: "asc" }, take: 1 }, inventory: true },
+        orderBy: { createdAt: "desc" },
+        take: 8,
+      }),
+    ]);
+    return { categories, products, databaseConfigured: true };
+  } catch {
+    return { categories: [], products: [], databaseConfigured: true };
+  }
+}
+
+export default async function HomePage() {
+  const { categories, products, databaseConfigured } = await loadStorefrontData();
+
   return (
     <>
       <header className="topbar">
@@ -48,27 +69,41 @@ export default function HomePage() {
         </section>
 
         <section className="container section" id="categories">
-          <div className="section-head">
-            <div><h2>تسوق حسب القسم</h2><p>اختر القسم الذي تبحث عنه</p></div>
-          </div>
-          <div className="categories">
-            {categories.map((category) => (
-              <a className="category" href="#products" key={category.name}>
-                <span aria-hidden="true">{category.icon}</span>{category.name}
-              </a>
-            ))}
-          </div>
+          <div className="section-head"><div><h2>تسوق حسب القسم</h2><p>الأقسام المنشورة من إدارة الصيدلية</p></div></div>
+          {categories.length ? (
+            <div className="categories">
+              {categories.map((category) => (
+                <a className="category" href={`/categories/${category.slug}`} key={category.id}>
+                  <span aria-hidden="true">✚</span>{category.nameAr}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              {databaseConfigured
+                ? "لا توجد أقسام منشورة حالياً. يمكن للإدارة إضافتها من لوحة التحكم بعد تجهيزها."
+                : "قاعدة البيانات غير مربوطة بعد؛ ستظهر الأقسام هنا عند إعداد الاتصال ونشر بياناتها."}
+            </div>
+          )}
         </section>
 
         <section className="container section" id="products">
-          <div className="section-head">
-            <div><h2>منتجات الصيدلية</h2><p>سيتم عرض المنتجات بعد ربط كتالوج قاعدة البيانات والتحقق من بياناتها</p></div>
-          </div>
-          <div className="empty-state">
-            <strong style={{color:"var(--text)"}}>لم تتم إضافة منتجات منشورة بعد</strong>
-            <br />لا نعرض أدوية أو أسعاراً تجريبية على أنها منتجات حقيقية.
-            <br />سيتمكن فريق الصيدلية من إضافة المنتجات ومراجعتها من لوحة الإدارة.
-          </div>
+          <div className="section-head"><div><h2>أحدث المنتجات</h2><p>منتجات منشورة ومراجعة من إدارة الصيدلية</p></div></div>
+          {products.length ? (
+            <div className="categories">
+              {products.map((product) => (
+                <a className="category" href={`/products/${product.id}`} key={product.id}>
+                  {product.images[0]?.url ? <img src={product.images[0].url} alt={product.images[0].altAr || product.nameAr} style={{width:"100%",height:150,objectFit:"contain",borderRadius:12}} /> : <span aria-hidden="true">✚</span>}
+                  <strong>{product.nameAr}</strong>
+                  <p>{product.inventory?.quantity && product.inventory.quantity > 0 ? "متوفر" : "غير متوفر حالياً"}</p>
+                </a>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              لا توجد منتجات منشورة بعد. لا نعرض أدوية أو أسعاراً تجريبية على أنها منتجات حقيقية.
+            </div>
+          )}
         </section>
 
         <section className="container section" id="about">
