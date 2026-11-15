@@ -146,6 +146,7 @@ model Product {
   images               ProductImage[]
   inventory            InventoryBalance?
   batches              InventoryBatch[]
+  movements            InventoryMovement[]
   orderItems           OrderItem[]
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
@@ -197,6 +198,7 @@ model InventoryMovement {
   referenceId String?
   createdAt   DateTime @default(now())
   actor       User     @relation("InventoryActor", fields: [actorId], references: [id])
+  product     Product  @relation(fields: [productId], references: [id])
   @@index([productId, createdAt])
 }
 
