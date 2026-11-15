@@ -24,8 +24,8 @@ describe("validateMedicineImportRows", () => {
 
   it("rejects duplicate SKUs in one upload", () => {
     const result = validateMedicineImportRows([validRow, validRow]);
-    expect(result.rows).toHaveLength(0);
-    expect(result.errors.some((error) => error.includes("SKU"))).toBe(true);
+    expect(result.rows).toHaveLength(1);
+    expect(result.errors.some((error) => error.includes("SKU مكرر"))).toBe(true);
   });
 
   it("rejects negative prices, quantities, and unsupported currencies", () => {
@@ -59,6 +59,8 @@ describe("validateMedicineImportRows", () => {
       { ...validRow, sku: "MED-004", nameAr: "", category: "", prescriptionRequired: "ربما" },
     ]);
     expect(result.rows).toHaveLength(0);
-    expect(result.errors.length).toBeGreaterThanOrEqual(3);
+    expect(result.errors[0]).toContain("الاسم التجاري مطلوب");
+    expect(result.errors[0]).toContain("التصنيف مطلوب");
+    expect(result.errors[0]).toContain("قيمة الوصفة");
   });
 });
