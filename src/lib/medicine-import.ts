@@ -102,7 +102,7 @@ export function validateMedicineImportRows(input: Record<string, unknown>[]) {
       ...(String(raw.batchNumber ?? "").trim() ? { batchNumber: String(raw.batchNumber).trim() } : {}),
       ...(expiresAt ? { expiresAt } : {}),
       ...(manufacturedAt ? { manufacturedAt } : {}),
-      prescriptionRequired,
+      prescriptionRequired: prescriptionRequired === true,
       ...(String(raw.descriptionAr ?? "").trim() ? { descriptionAr: String(raw.descriptionAr).trim() } : {}),
       ...(imageUrl ? { imageUrl } : {}),
     });
